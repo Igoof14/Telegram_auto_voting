@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  bot1:
+    build: .
+    env_file:
+      - .env.ales
+    container_name: bot1_container
+
+  bot2:
+    build: .
+    env_file:
+      - .env.mandarisha
+    container_name: bot2_container
