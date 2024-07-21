@@ -20,7 +20,7 @@ thread_id = int(os.getenv('THREAD_ID'))
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-client = TelegramClient(session_name, api_id, api_hash)
+client = TelegramClient(session_name, api_id, api_hash, system_version="4.16.30-vxCUSTOM")
 
 
 @client.on(events.NewMessage(chats=group_id))
