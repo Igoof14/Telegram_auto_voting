@@ -22,20 +22,18 @@ logger = logging.getLogger(__name__)
 client = TelegramClient('session_name', api_id, api_hash)
 
 
-@client.on(events.NewMessage)
+@client.on(events.NewMessage(chats=group_id))
 async def handler(event):
     message = event.message
     try:
-        if (message.peer_id.channel_id == group_id
-                and message.reply_to.reply_to_msg_id == thread_id
+        if (message.reply_to.reply_to_msg_id == thread_id
                 and isinstance(message.media, MessageMediaPoll)):
             poll = message.media.poll
-            if 'НТЦ' in poll.question.text or 'МТА' in poll.question.text:
-                print(f"Question: {poll.question.text}")
-                print(poll.answers)
+            if ('НТЦ' in poll.question.text or 'МТА' in poll.question.text) \
+                    and 'допкорт' not in poll.question.text.lower():
                 for answer in poll.answers:
                     if 'новички' in answer.text.text.lower().strip():
-                        sleep(2)
+                        sleep(1)
                         await client(SendVoteRequest(
                             peer=message.peer_id,
                             msg_id=message.id,
