@@ -13,13 +13,14 @@ load_dotenv()
 api_id = int(os.getenv('API_ID'))
 api_hash = os.getenv('API_HASH')
 phone = os.getenv('PHONE_NUMBER')
+session_name = os.getenv('SESSION_NAME')
 group_id = int(os.getenv('GROUP_ID'))
 thread_id = int(os.getenv('THREAD_ID'))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-client = TelegramClient('session_name', api_id, api_hash)
+client = TelegramClient(session_name, api_id, api_hash)
 
 
 @client.on(events.NewMessage(chats=group_id))
