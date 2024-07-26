@@ -30,11 +30,22 @@ async def handler(event):
         if (message.reply_to.reply_to_msg_id == thread_id
                 and isinstance(message.media, MessageMediaPoll)):
             poll = message.media.poll
+            sleep(1)
             if ('НТЦ' in poll.question.text or 'МТА' in poll.question.text) \
                     and 'допкорт' not in poll.question.text.lower():
                 for answer in poll.answers:
                     if 'новички' in answer.text.text.lower().strip():
-                        sleep(1)
+
+                        await client(SendVoteRequest(
+                            peer=message.peer_id,
+                            msg_id=message.id,
+                            options=[answer.option]
+                        ))
+                        break
+            elif 'коломенская наб' in poll.question.text.lower() \
+                    and 'понедельник' in poll.question.text.lower():
+                for answer in poll.answers:
+                    if 'иду' in answer.text.text.lower().strip():
                         await client(SendVoteRequest(
                             peer=message.peer_id,
                             msg_id=message.id,
